@@ -1,0 +1,24 @@
+%div#insurance-information
+  - ins_info = form.object.is_a?(Property) && form.object.use_corporate_insurance_information? ? InsuranceInformation.new({ :insurance_documents_attributes => { "0" => {} } }) : form.object.insurance_information
+  = form.fields_for :insurance_information, ins_info do |insurance_information_form|
+    %div#insurance-information-fields
+      %div
+        = insurance_information_form.label :name, 'Document name'
+        = insurance_information_form.text_field :name
+
+      %div
+        = insurance_information_form.label :expires_on, 'Expiration date'
+        = insurance_information_form.date_select :expires_on
+
+    %div#insurance-documents
+      = insurance_information_form.fields_for :insurance_documents do |insurance_document_form|
+        %div.insurance-document
+          = insurance_document_form.hidden_field :retained_attachment
+          = insurance_document_form.label :attachment, 'Select a file from your computer'
+          = insurance_document_form.file_field :attachment
+          - if insurance_document_form.object.attachment.present?
+            Current file: #{ link_to insurance_document_form.object.attachment.name, insurance_document_form.object.attachment.url }
+
+          = insurance_document_form.link_to_remove 'Remove this document'
+
+      = insurance_information_form.link_to_add 'Add another insurance document', :insurance_documents

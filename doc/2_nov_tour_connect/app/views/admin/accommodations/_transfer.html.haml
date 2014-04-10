@@ -1,0 +1,71 @@
+%h2 Step Six: Transfer
+
+= link_to "Previous: Special Offers", edit_admin_accommodation_url(accommodation, :step => 'special_offers')
+
+= form_for accommodation, :url => [:admin, accommodation] do |form|
+  = render 'shared/error_messages', { :targets => [form.object, form.object.transfer] }
+
+  = hidden_field_tag :step, params[:step]
+
+  = form.fields_for :transfer do |transfer_form|
+
+    %fieldset
+      = transfer_form.check_box :provided_by_hotel
+      = transfer_form.label :provided_by_hotel, 'Provided by Hotel'
+
+    %fieldset
+      = transfer_form.label :from_location, 'From Location'
+      = transfer_form.text_field :from_location
+
+      = transfer_form.label :to_location, 'To Location'
+      = transfer_form.text_field :to_location
+
+    %fieldset
+      = transfer_form.label :max_passengers, 'Maximum Passengers'
+      = transfer_form.text_field :max_passengers
+
+    %fieldset
+      = transfer_form.check_box :include_baby_seats
+      = transfer_form.label :include_baby_seats, 'Include Baby Seats'
+
+    %fieldset
+      %legend Transfer Rate
+
+      %h3 Adult Return
+
+      = transfer_form.label :adult_return_net_rate, 'Net Rate'
+      = transfer_form.text_field :adult_return_net_rate
+
+      = render :partial => 'shared/percent_amount_selector', :locals => { :form => transfer_form, :type_field => :adult_return_commission_type, :amount_field => :adult_return_commission_amount }
+
+      %h3 Child Return
+
+      = transfer_form.label :child_return_net_rate, 'Net Rate'
+      = transfer_form.text_field :child_return_net_rate
+
+      = render :partial => 'shared/percent_amount_selector', :locals => { :form => transfer_form, :type_field => :child_return_commission_type, :amount_field => :child_return_commission_amount }
+
+      %h3 Adult One Way
+
+      = transfer_form.label :adult_one_way_net_rate, 'Net Rate'
+      = transfer_form.text_field :adult_one_way_net_rate
+
+      = render :partial => 'shared/percent_amount_selector', :locals => { :form => transfer_form, :type_field => :adult_one_way_commission_type, :amount_field => :adult_one_way_commission_amount }
+
+      %h3 Child One Way
+
+      = transfer_form.label :child_one_way_net_rate, 'Net Rate'
+      = transfer_form.text_field :child_one_way_net_rate
+
+      = render :partial => 'shared/percent_amount_selector', :locals => { :form => transfer_form, :type_field => :child_one_way_commission_type, :amount_field => :child_one_way_commission_amount }
+
+    %fieldset
+      = transfer_form.label :luggage_restrictions, 'Luggage Restrictions'
+      = transfer_form.text_area :luggage_restrictions
+
+    %fieldset
+      = transfer_form.label :pick_up_details, 'Pick Up Details'
+      = transfer_form.text_area :pick_up_details
+
+  .actions
+    = form.submit 'Save & Next'

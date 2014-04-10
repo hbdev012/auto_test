@@ -1,0 +1,5 @@
+- if supplier.errors.present?
+  $('#new_amenity').addClass('error');
+- else
+  $('#accommodation_amenities').append('<option value="#{ params[:name] }">#{ params[:name] }</option>');
+  $('#accommodation_amenities').multiselect('destroy').multiselect();

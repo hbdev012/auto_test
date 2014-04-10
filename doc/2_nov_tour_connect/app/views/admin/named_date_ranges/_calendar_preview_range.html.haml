@@ -1,0 +1,3 @@
+- ranges.each do |range|
+  %div{ :class => "date-range #{ 'gap' if range.new_record? }", :style => "width: #{percent_of_year(range)};" }
+    = range.name

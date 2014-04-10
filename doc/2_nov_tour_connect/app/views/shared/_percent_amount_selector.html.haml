@@ -1,0 +1,9 @@
+%div.percent-amount-selector
+  = form.label type_field
+  = form.select type_field, ['percentage', 'flat fee']
+
+  = form.label amount_field, 'Amount'
+  %span.type-currency $
+  = form.text_field amount_field
+  %span.type-percent %
+

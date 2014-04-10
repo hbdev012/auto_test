@@ -1,0 +1,6 @@
+%h2 Step Six: Contracts and Billing
+
+= link_to "Previous: Transfer", edit_admin_accommodation_url(accommodation, :step => 'transfer')
+
+= nested_form_for accommodation, :url => [:admin, accommodation], :html => { :multipart => true } do |form|
+  = render :partial => 'admin/properties/contracts_and_billing', :locals => { :form => form }

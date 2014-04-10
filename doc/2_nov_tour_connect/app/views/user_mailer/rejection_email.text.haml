@@ -1,0 +1,6 @@
+:plain
+  #{ @user.first_name },
+
+  Your request to join #{ @company.name } has been denied. If you feel this is in error, contact your company representative.
+- if @reason.present?
+  Denial Reason: #{ @reason }

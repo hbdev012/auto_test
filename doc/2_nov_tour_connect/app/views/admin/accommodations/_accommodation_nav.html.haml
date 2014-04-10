@@ -1,0 +1,65 @@
+%ol#property-nav
+
+  - if accommodation.new_record?
+    %li#basic_information_nav
+      %span Basic Information
+      .status.not-filled
+
+    %li#ratings_and_amenities_nav
+      %span Ratings and Amenities
+      .status.not-filled
+
+    %li#policies_nav
+      %span Policies
+      .status.not-filled
+
+    %li#seasons_nav
+      %span Seasons
+      .status.not-filled
+
+    %li#special_offers_nav
+      %span Special Offers
+      .status.not-filled
+
+    %li#transfer_nav
+      %span Transfer
+      .status.not-filled
+
+    %li#contracts_and_billing_nav
+      %span Contracts and Billing
+      .status.not-filled
+
+  - else
+    %li#basic_information_nav
+      = link_to 'Basic Information', edit_admin_accommodation_url(accommodation, :step => 'basic_information')
+      .status.not-filled
+
+    %li#ratings_and_amenities_nav
+      = link_to 'Ratings and Amenities', edit_admin_accommodation_url(accommodation, :step => 'ratings_and_amenities')
+      .status.not-filled
+
+    %li#policies_nav
+      = link_to 'Policies', edit_admin_accommodation_url(accommodation, :step => 'policies')
+      .status.not-filled
+
+    %li#seasons_nav
+      = link_to 'Seasons', edit_admin_accommodation_url(accommodation, :step => 'seasons')
+      .status.not-filled
+
+    %li#special_offers_nav
+      = link_to 'Special Offers', edit_admin_accommodation_url(accommodation, :step => 'special_offers')
+      .status.not-filled
+
+    %li#transfer_nav
+      = link_to 'Transfer', edit_admin_accommodation_url(accommodation, :step => 'transfer')
+      .status.not-filled
+
+    %li#contracts_and_billing_nav
+      = link_to 'Contracts and Billing', edit_admin_accommodation_url(accommodation, :step => 'contracts_and_billing')
+      .status.not-filled
+
+#accommodation-nav-key
+  %ul
+    %li Not filled yet #{ image_tag 'icons/not_filled.png' }
+    %li Completed #{ image_tag 'icons/completed.png' }
+    %li Missing required information #{ image_tag 'icons/missing_info.png' }

@@ -1,0 +1,29 @@
+- billing_info = form.object.is_a?(Property) && form.object.use_corporate_billing_information? ? BillingInformation.new : form.object.billing_information
+= form.fields_for :billing_information, billing_info do |billing_info_form|
+  %div
+    = billing_info_form.label :bank_name, 'Financial Institution'
+    = billing_info_form.text_field :bank_name
+  %div
+    = billing_info_form.label :branch
+    = billing_info_form.text_field :branch
+  %div
+    = billing_info_form.label :routing_number, 'BSB/Routing'
+    = billing_info_form.text_field :routing_number
+  %div
+    = billing_info_form.label :account_number
+    = billing_info_form.text_field :account_number
+  %div
+    = billing_info_form.label :account_name
+    = billing_info_form.text_field :account_name
+  %div
+    = billing_info_form.label :code, 'IBAN/SWIFT Code'
+    = billing_info_form.text_field :code
+  %div
+    = billing_info_form.label :currency
+    = billing_info_form.select :currency, Company::CURRENCIES
+  %div
+    = billing_info_form.label :tax
+    = billing_info_form.text_field :tax
+  %div
+    = billing_info_form.label :terms
+    = billing_info_form.text_area :terms

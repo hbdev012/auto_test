@@ -1,0 +1,11 @@
+- targets = targets.to_a
+- if targets.compact.any? { |t| t.errors.present? }
+  #errorExplanation
+    %h2
+      = pluralize(targets.inject(0) { |sum, t| sum += t.errors.count }, "error")
+      prohibited this record from being saved:
+
+    %ul
+      - targets.each do |target|
+        - target.errors.full_messages.each do |msg|
+          %li= msg

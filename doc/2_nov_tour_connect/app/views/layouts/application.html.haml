@@ -1,0 +1,22 @@
+!!! 5
+%html
+  %head
+    %title tourconnect
+    = stylesheet_link_tag :application
+    = javascript_include_tag :application
+    = csrf_meta_tags
+  %body
+    %ul.hmenu
+      = render 'devise/menu/admin_items'
+      = render 'devise/menu/registration_items'
+      = render 'devise/menu/login_items'
+    %ul.hmenu
+      - if user_signed_in? and can?(:manage, :all)
+        %li= link_to 'Edit Corporate Information', edit_admin_signup_path
+        = render 'shared/supplier_admin_links'
+        = render 'shared/templinks'
+
+    #flash-messages
+      - flash.each do |name, msg|
+        = content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String)
+    = yield

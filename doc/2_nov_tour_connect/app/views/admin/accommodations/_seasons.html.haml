@@ -1,0 +1,9 @@
+%h2 Step Four: Seasons
+
+= link_to "Previous: Policies", edit_admin_accommodation_url(accommodation, :step => 'policies')
+
+%p 
+  Add here all the seasons that affect this location’s product rate.
+
+= nested_form_for accommodation, :url => [:admin, accommodation] do |form|
+  = render :partial => 'admin/properties/seasons', :locals => { :form => form }

@@ -1,0 +1,11 @@
+.weekend-rates
+  = form.fields_for :weekend_rates do |weekend_rate_form|
+    .field
+      = weekend_rate_form.label :description
+      = weekend_rate_form.text_field :description
+
+    = render :partial => 'admin/price_infos/form', :locals => { :form => weekend_rate_form }
+
+    = weekend_rate_form.link_to_remove 'Remove rate option'
+
+  = form.link_to_add 'Add rate option', :weekend_rates

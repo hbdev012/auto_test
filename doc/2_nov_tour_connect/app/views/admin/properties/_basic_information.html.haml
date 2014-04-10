@@ -1,0 +1,43 @@
+= render 'shared/error_messages', { :targets => [form.object, *form.object.property_locations, *form.object.contact_groups.to_a, *form.object.contact_groups.collect(&:contacts).flatten] }
+
+= hidden_field_tag :step, params[:step]
+
+%h2#property-description
+  %span.header-text
+    Property Description and Location
+
+%fieldset
+
+  .field
+    = form.label :name
+    = form.text_field :name
+
+%fieldset
+  %legend Property Description:
+
+  .field
+    = form.label :short_description
+    = form.text_area :short_description
+    %span.note Maximum 250 Characters
+
+  .field
+    = form.label :long_description
+    = form.text_area :long_description
+    %span.note Maximum 1000 Characters
+
+%fieldset
+  .field
+    = form.label :conforms_to_eu, 'Conforms to EU Regulations'
+    = form.check_box :conforms_to_eu
+
+- with_options :locals => { :form => form } do |property_form|
+  = property_form.render :partial => 'admin/properties/property_location'
+  = property_form.render :partial => 'admin/contacts/contacts_form'
+
+%fieldset
+  %legend Images
+
+  = render :partial => 'admin/images/form', :locals => { :form => form }
+
+.actions
+  = form.submit 'Save & Next'

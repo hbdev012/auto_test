@@ -1,0 +1,41 @@
+%h2 Step Five: Special Offers
+
+= link_to "Previous: Seasons", edit_admin_accommodation_url(accommodation, :step => 'seasons')
+
+= nested_form_for accommodation, :url => [:admin, accommodation] do |form|
+  = render 'shared/error_messages', { :targets => [form.object, *form.object.stay_pay_deals, *form.object.room_upgrades, *form.object.bonus_offers] }
+
+  = hidden_field_tag :step, params[:step]
+
+  %h2#stay-pay
+    %span.header-text
+      Stay/Pay Deals
+
+  %div#stay-pay-deals
+    = form.fields_for :stay_pay_deals do |stay_pay_deal_form|
+      = render :partial => 'admin/accommodations/special_offers/stay_pay_deals', :locals => { :form => stay_pay_deal_form }
+
+    = form.link_to_add 'Add stay/pay deal', :stay_pay_deals
+
+  %h2#rooms
+    %span.header-text
+      Room Upgrades
+
+  %div#room_upgrades
+    = form.fields_for :room_upgrades do |room_upgrade_form|
+      = render :partial => 'admin/accommodations/special_offers/room_upgrades', :locals => { :form => room_upgrade_form }
+
+    = form.link_to_add 'Add room upgrade', :room_upgrades
+
+  %h2#bonus
+    %span.header-text
+      Bonus Offers
+
+  %div#bonus-offers
+    = form.fields_for :bonus_offers do |bonus_offer_form|
+      = render :partial => 'admin/properties/bonus_offers', :locals => { :form => bonus_offer_form }
+
+    = form.link_to_add 'Add a bonus offer', :bonus_offers
+
+  .actions
+    = form.submit 'Save & Next'

@@ -1,0 +1,19 @@
+- if current_company.is_a?(Supplier)
+  = form.fields_for :supplier_corporate_information, form.object.supplier_corporate_information do |supplier_corporate_information_form|
+    %fieldset
+      %legend What type of product do you offer?
+      - SupplierCorporateInformation::PRODUCT_TYPES.each do |product_type|
+        %label
+          = supplier_corporate_information_form.radio_button :product_type, product_type
+          = product_type
+
+    %fieldset#direct-products
+      %legend Do you offer your products direct from your Corporate office?
+      %label
+        = supplier_corporate_information_form.radio_button :direct_products, true
+        Yes
+
+      %label
+        = supplier_corporate_information_form.radio_button :direct_products, false
+        No, we don't offer products direct from our corporate office
+

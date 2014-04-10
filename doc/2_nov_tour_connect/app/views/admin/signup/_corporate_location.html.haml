@@ -1,0 +1,5 @@
+= form.fields_for :corporate_locations do |location_form|
+  %fieldset
+    %legend Corporate Location:
+
+    = render :partial => 'admin/locations/location', :locals => { :form => location_form }

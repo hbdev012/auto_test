@@ -1,0 +1,5 @@
+#filter-products
+  %label
+    Filter by:
+    = select_tag :pid, options_for_select([['- Choose Property -', nil]]) + options_from_collection_for_select(properties, :id, :name, params[:pid])
+  = submit_tag 'Filter', :name => nil

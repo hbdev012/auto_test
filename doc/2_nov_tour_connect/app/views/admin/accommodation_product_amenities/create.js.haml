@@ -1,0 +1,5 @@
+- if accommodation_product.errors.present?
+  $('#new_amenity').addClass('error');
+- else
+  $('#accommodation_product_room_detail_amenities').append('<option value="#{ params[:name] }">#{ params[:name] }</option>');
+  $('#accommodation_product_room_detail_amenities').multiselect('destroy').multiselect();

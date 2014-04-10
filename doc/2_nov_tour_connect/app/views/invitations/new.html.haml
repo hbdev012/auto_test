@@ -1,0 +1,33 @@
+= form_for invitation, :url => invitations_path do |form|
+  = render 'shared/error_messages', { :targets => [form.object] }
+
+  %fieldset
+
+    .fields
+      = form.label :company_name
+      = form.text_field :company_name
+
+    .fields
+      = form.label :email
+      = form.text_field :email
+
+    .fields
+      = form.label :first_name
+      = form.text_field :first_name
+
+    .fields
+      = form.label :last_name
+      = form.text_field :last_name
+
+  %h2 - or -
+  
+  %fieldset
+    %p 
+      %strong CSV Format: 
+      company name, email, first name, last name
+  
+    .fields
+      = form.label :invite_list, 'Select a file from your computer'
+      = form.file_field :invite_list
+
+  = form.submit 'Send Invitation', :disable_with => 'Sending...'

@@ -1,0 +1,15 @@
+= form.fields_for :corporate_information, form.object.corporate_information do |corporate_information_form|
+  %fieldset
+    %legend Corporate Logo:
+    %div
+      = image_tag(corporate_information_form.object.logo.thumb('150x>').url) if corporate_information_form.object.logo.present?
+      = corporate_information_form.hidden_field :retained_logo
+      = corporate_information_form.label :logo, 'Select a logo from your computer'
+      = corporate_information_form.file_field :logo
+
+  = render :partial => 'supplier_corporate_information', :locals => { :form => form }
+
+  %fieldset
+    %legend Corporate Description:
+    = corporate_information_form.label :description, 'Write a brief description about your company'
+    = corporate_information_form.text_area :description

@@ -1,0 +1,9 @@
+- if @invitation.name.present?
+  To: #{ @invitation.name }
+
+From: #{ @invitation.user.name }
+
+You've been invited to join TourConnect. To sign up for an account,
+use the link below:
+
+#{ @url }

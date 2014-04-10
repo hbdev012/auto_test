@@ -1,0 +1,16 @@
+#calendar-preview
+  .months
+    - %w(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec).each do |month|
+      .month{ :style => "width: #{1.0/12.0*100.0}%;" }
+        = month
+
+  .date-ranges
+    .seasons
+      = render :partial => 'admin/named_date_ranges/calendar_preview_range', :locals => { :ranges => seasons }
+
+    .blackouts
+      = render :partial => 'admin/named_date_ranges/calendar_preview_range', :locals => { :ranges => blackouts }
+
+    .specials
+      = render :partial => 'admin/named_date_ranges/calendar_preview_range', :locals => { :ranges => specials }
+  

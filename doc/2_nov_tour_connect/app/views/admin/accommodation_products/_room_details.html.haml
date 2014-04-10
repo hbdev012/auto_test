@@ -1,0 +1,120 @@
+%h2 Step Two: Room Details
+
+= link_to "Previous: Basic Information", edit_admin_accommodation_product_url(accommodation_product, :step => 'basic_information')
+
+%p
+  Add your rates using seasons. Each season is driven by geographical market(s)
+  (e.g. Global, Domestic or specific countries) and each rate group include one or more season(s).
+
+= nested_form_for accommodation_product, :url => [:admin, accommodation_product], :html => { :multipart => true } do |form|
+  = render 'shared/error_messages', { :targets => form.object }
+
+  = hidden_field_tag :step, params[:step]
+
+  = form.fields_for :room_detail, form.object.room_detail do |room_detail_form|
+
+    %fieldset
+      %legend Check In/Out
+
+      .field
+        = room_detail_form.label :check_in_at, 'Check In:'
+        = room_detail_form.time_select :check_in_at, :ampm => true
+
+      .field
+        = room_detail_form.label :check_out_at, 'Check Out:'
+        = room_detail_form.time_select :check_out_at, :ampm => true
+
+      %p
+        Late Check Out:
+
+      .field
+        = room_detail_form.check_box :late_check_out
+        = room_detail_form.label :late_check_out, 'Available'
+
+      .late-check-out
+        .field
+          = room_detail_form.label :late_check_out_at, 'Until:'
+          = room_detail_form.time_select :late_check_out_at, :ampm => true
+
+        .field
+          = room_detail_form.label :late_check_out_cost, 'Cost:'
+          = room_detail_form.select :late_check_out_cost, [['Free', 'free']]
+
+    %fieldset
+      %legend Room Classification
+
+      .field
+        %label
+          = room_detail_form.radio_button :room_classification, 'room'
+          Room
+
+      .field
+        %label
+          = room_detail_form.radio_button :room_classification, 'suite'
+          Suite
+
+    %fieldset
+      %legend Maximum PAX
+
+      .field
+        = room_detail_form.label :maximum_pax_adults, 'Adults'
+        = room_detail_form.select :maximum_pax_adults, (0..10).to_a
+
+      .field
+        = room_detail_form.label :maximum_pax_adult_child, 'Adult/Child'
+        = room_detail_form.text_field :maximum_pax_adult_child
+
+    %fieldset
+      .field
+        = room_detail_form.label :existing_bedding
+        = room_detail_form.text_field :existing_bedding
+        %small S=Single D=Double Q=Queen SK=Split King K=King TW=Twin Bunk
+
+    %fieldset
+      %legend Number of Extra Bedding:
+
+      .field
+        = room_detail_form.label :sofas, 'Sofas'
+        = room_detail_form.select :sofas, (0..4).to_a
+
+      .field
+        = room_detail_form.label :rollaways, 'Rollaways'
+        = room_detail_form.select :rollaways, (0..4).to_a
+
+      .field
+        = room_detail_form.check_box :consider_as_existing_bedding
+        = room_detail_form.label :consider_as_existing_bedding, 'Considered as Existing bedding for children'
+
+    %fieldset
+      %legend Interconnecting Rooms:
+
+      .field
+        %label
+          = room_detail_form.radio_button :interconnecting_rooms, false
+          Not Available
+
+      .field
+        %label
+          = room_detail_form.radio_button :interconnecting_rooms, true
+          Available
+
+    %fieldset
+      %legend Amenities
+
+      %p Type amenity name and click enter to add it, or choose from the list direct.
+
+      %div
+        = room_detail_form.select :amenities, options_for_select(Supplier::DEFAULT_AMENITIES, room_detail_form.object.amenities), {}, :multiple => true, :class => 'multiselect'
+
+      %div.new-amenity
+        %p If the amenity you want isn't displayed, you can add a new one here.
+
+        = label_tag :new_amenity, 'Add Amenity'
+        = text_field_tag :new_amenity
+        = link_to 'Add', admin_accommodation_product_accommodation_product_amenities_path(room_detail_form.object.accommodation_product), :method => :post, :id => 'add-amenity', :remote => true
+
+  %fieldset
+    %legend Images
+    = render :partial => 'admin/images/form', :locals => { :form => form }
+
+  = form.submit 'Save & Next', :disable_with => 'Saving...'

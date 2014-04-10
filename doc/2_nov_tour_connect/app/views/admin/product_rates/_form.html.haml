@@ -1,0 +1,11 @@
+.product-rates
+  = form.fields_for :product_rates do |product_rate_form|
+    .field
+      = product_rate_form.label :description
+      = product_rate_form.text_field :description
+
+    = render :partial => 'admin/price_infos/form', :locals => { :form => product_rate_form }
+
+    = product_rate_form.link_to_remove 'Remove rate option'
+
+  = form.link_to_add 'Add rate option', :product_rates

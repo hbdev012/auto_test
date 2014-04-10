@@ -1,0 +1,51 @@
+%h2 Step Two: Ratings and Amenities
+
+= link_to "Previous: Basic Information", edit_admin_accommodation_url(accommodation, :step => 'basic_information')
+
+= form_for accommodation, :url => [:admin, accommodation] do |form|
+  = render 'shared/error_messages', { :targets => [form.object] }
+
+  = hidden_field_tag :step, params[:step]
+
+  %fieldset
+    %legend Classification
+
+    %p Choose the proper classification(s) for your property.
+
+    %ul
+      - Accommodation::CLASSIFICATIONS.each do |classification|
+        %li
+          %label
+            = check_box_tag :classifications, classification, form.object.classifications.include?(classification), :name => "accommodation[classifications][]"
+            = classification
+
+  %fieldset
+    %legend Rating
+
+    .field
+      = form.text_field :rating, :size => 1 
+      = form.label :rating, 'Stars'
+
+    .field
+      - Accommodation::RATING_TYPES.each do |rating_type|
+        %label
+          = form.radio_button :rating_type, rating_type
+          = rating_type
+
+  %fieldset
+    %legend Amenities
+
+    %p Type amenity name and click enter to add it, or choose from the list direct.
+
+    %div
+      = form.select :amenities, options_for_select(form.object.supplier.amenities, form.object.amenities), {}, :multiple => true, :class => 'multiselect'
+
+    %div.new-amenity
+      %p If the amenity you want isn't displayed, you can add a new one here.
+
+      = label_tag :new_amenity, "Add Amenity"
+      = text_field_tag :new_amenity
+      = link_to 'Add', admin_supplier_supplier_amenities_path(form.object.supplier), :method => :post, :id => 'add-amenity', :remote => true
+
+  .actions
+    = form.submit 'Save & Next'

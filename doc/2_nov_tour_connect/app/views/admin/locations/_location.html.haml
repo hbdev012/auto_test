@@ -1,0 +1,40 @@
+%div
+  = form.label :address_1, 'Address'
+  = form.text_field :address_1
+
+%div
+  = form.label :address_2, 'Address (line 2)'
+  = form.text_field :address_2
+
+%div
+  = form.label :city
+  = form.text_field :city
+
+%div
+  = form.label :state, 'State/Province/Region'
+  = form.text_field :state
+
+%div
+  = form.label :postal_code, 'Zip/Postal Code'
+  = form.text_field :postal_code
+
+%div
+  = form.label :country
+  = form.select :country, SELECTABLE_COUNTRIES
+
+- if form.object.is_a?(CorporateLocation)
+  %div
+    = form.label :corporate_identifier, 'Corporate identification number'
+    = form.text_field :corporate_identifier
+
+%div
+  = form.label :phone_number
+  = form.text_field :phone_number
+
+%div
+  = form.label :fax_number
+  = form.text_field :fax_number
+
+%div
+  = form.label :uri, 'Website'
+  = form.text_field :uri

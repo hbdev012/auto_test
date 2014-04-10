@@ -1,0 +1,28 @@
+%h1 #{current_user.first_name}, let's complete your signup process.
+
+%h2 Step Two: Terms and Conditions and Submission Criteria
+
+= nested_form_for current_company, :as => :company, :url => admin_terms_path do |f|
+  = render 'shared/error_messages', { :targets => f.object.contractor_terms.to_a }
+
+  %fieldset
+    %p Add your corporate terms and conditions and submission criteria, so suppliers can see it in your corporate profile and you can use it in your contracts.
+
+    %div#terms-sets
+      = f.fields_for :contractor_terms do |contractor_terms_form|
+        %div.terms-set
+          %div
+            = contractor_terms_form.label :title, 'T&C and Submission criteria set title'
+            = contractor_terms_form.text_field :title
+          %div
+            = contractor_terms_form.label :terms, 'Terms and Conditions'
+            = contractor_terms_form.text_area :terms
+          %div
+            = contractor_terms_form.label :submission_criteria, 'Submission Criteria'
+            = contractor_terms_form.text_area :submission_criteria
+
+            = contractor_terms_form.link_to_remove 'Remove this T&C / Submission criteria set'
+
+      = f.link_to_add 'Add another T&C / Submission criteria set', :contractor_terms
+
+  = f.submit 'Save & Next', :disable_with => 'Submitting...'

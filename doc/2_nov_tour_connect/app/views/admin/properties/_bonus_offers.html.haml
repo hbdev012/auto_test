@@ -1,0 +1,40 @@
+%fieldset
+  = form.label :title, 'Offer Title'
+  = form.text_field :title
+
+= render :partial => 'admin/properties/special_offers/special_offer_date_range', :locals => { :form => form, :association_name => :bonus_offer_date_ranges }
+= render :partial => 'admin/properties/special_offers/booking_code',             :locals => { :form => form }
+
+%fieldset
+  = form.label :details, 'Offer Details'
+  = form.text_area :details
+
+%fieldset.bonus-offer-rate-type
+  = form.label :rate_type, 'Rate Type'
+  = form.select :rate_type, ['Per night', 'Per number of guests']
+
+  %div.per-number-of-guests
+    = form.label :number_of_guests, 'Number'
+    = form.text_field :number_of_guests
+
+    = form.label :max_number_of_guests, 'Maximum Number'
+    = form.text_field :max_number_of_guests
+
+%fieldset.bonus-offer-rate
+  = form.label :rate
+  = form.select :rate, ['Free of Charge', 'Discount', 'Rate Amount']
+  
+  %div.rate-discount
+    = render :partial => 'shared/percent_amount_selector', :locals => { :form => form, :type_field => :discount_type, :amount_field => :discount_amount }
+
+  %div.rate-amount
+    = form.label :net_rate, 'Net'
+    = form.text_field :net_rate
+
+    = form.label :commission_percent, 'Commission'
+    = form.text_field :commission_percent
+
+= render :partial => 'admin/properties/special_offers/combinable',         :locals => { :form => form }
+= render :partial => 'admin/properties/special_offers/special_conditions', :locals => { :form => form }
+
+= form.link_to_remove 'Remove this bonus offer'

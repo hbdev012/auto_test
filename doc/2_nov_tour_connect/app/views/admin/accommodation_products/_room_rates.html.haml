@@ -1,0 +1,146 @@
+%h2 Step Three: Room Rates
+
+= link_to "Previous: Room Details", edit_admin_accommodation_product_url(accommodation_product, :step => 'room_details')
+
+= nested_form_for accommodation_product, :url => [:admin, accommodation_product] do |form|
+  = render 'shared/error_messages', { :targets => form.object }
+
+  = hidden_field_tag :step, params[:step]
+
+  #room-rates
+    = form.fields_for :room_rates do |room_rate_form|
+      %fieldset
+        .field
+          = room_rate_form.label :season_id, 'Season Name:'
+          = room_rate_form.select(:season_id, options_for_select([['- Choose Season name -', nil]]) + options_from_collection_for_select(form.object.property.seasons, :id, :name, room_rate_form.object.season_id.to_s))
+
+      %fieldset
+        %legend Validity Dates:
+
+        .validity-dates
+          = room_rate_form.fields_for :validity_dates do |validity_date_form|
+            = render :partial => 'admin/simple_date_ranges/form', :locals => { :form => validity_date_form }
+
+            = validity_date_form.link_to_remove 'Remove this date'
+
+          = room_rate_form.link_to_add 'Add a date', :validity_dates
+
+      = render :partial => 'admin/product_markets/form', :locals => { :form => room_rate_form }
+
+      %fieldset
+        %legend Rate Type
+
+        .field
+          %label
+            = room_rate_form.radio_button :rate_type, 'per room'
+            Per room per night
+
+        .field
+          %label
+            = room_rate_form.radio_button :rate_type, 'per person'
+            Per person per night
+
+      %fieldset
+        %legend Rates:
+        = render :partial => 'admin/product_rates/form', :locals => { :form => room_rate_form }
+
+      %fieldset.weekend-rate
+        %legend Weekend Rate
+
+        .field
+          = room_rate_form.check_box :weekend_same_as_other_days
+          = room_rate_form.label :weekend_same_as_other_days, 'Same as other days'
+
+        .weekend-rate-fields
+          .field
+            = room_rate_form.label :weekend_days
+            = room_rate_form.text_field :weekend_days
+
+          .field
+            = room_rate_form.label :weekend_minimum_nights, 'Minimum stays'
+            = room_rate_form.text_field :weekend_minimum_nights
+
+            = render :partial => 'admin/weekend_rates/form', :locals => { :form => room_rate_form }
+
+      %fieldset
+        %legend Inclusion and Bonus
+
+        .field
+          = room_rate_form.label :inclusion, 'Please detail inclusions and/or bonus offers here:'
+          = room_rate_form.text_area :inclusion, :rows => 10
+
+      %fieldset.stay-pay
+        %legend Stay/Pay Offers
+
+        .field
+          = room_rate_form.check_box :stay_pay_available
+          = room_rate_form.label :stay_pay_available, 'Available'
+
+        .stay-pay-offers
+          = render :partial => 'admin/stay_pay_offers/form', :locals => { :form => room_rate_form }
+
+      %fieldset
+        %legend Meal Rates
+
+        .meal-rates
+          = room_rate_form.fields_for :meal_rates do |meal_rate_form|
+            .field
+              = meal_rate_form.label :name
+              = meal_rate_form.text_field :name
+
+            .field
+              = meal_rate_form.label :ad_rate, 'AD Rate'
+              = meal_rate_form.text_field :ad_rate
+
+            .field
+              = meal_rate_form.label :ch_rate, 'CH Rate'
+              = meal_rate_form.text_field :ch_rate
+
+            .field
+              = meal_rate_form.label :description
+              = meal_rate_form.text_field :description
+
+            = meal_rate_form.link_to_remove 'Remove meal rate'
+
+          = room_rate_form.link_to_add 'Add a meal rate', :meal_rates
+
+      %fieldset
+        %legend Special Event Meals
+        %p Add all special events meals within this season
+
+        .special-event-meals
+          = room_rate_form.fields_for :special_event_meals do |special_event_meal_form|
+            .field
+              = special_event_meal_form.label :name, 'Event name'
+              = special_event_meal_form.text_field :name
+
+            .field
+              = special_event_meal_form.label :date
+              = special_event_meal_form.text_field :date
+
+            .field
+              = special_event_meal_form.label :ad_rate, 'AD Rate'
+              = special_event_meal_form.text_field :ad_rate
+
+            .field
+              = special_event_meal_form.label :ch_rate, 'CH Rate'
+              = special_event_meal_form.text_field :ch_rate
+
+            .field
+              = special_event_meal_form.label :description
+              = special_event_meal_form.text_field :description
+
+            .field
+              = special_event_meal_form.check_box :mandatory
+              = special_event_meal_form.label :mandatory
+
+            = special_event_meal_form.link_to_remove 'Remove special event meal rate'
+
+          = room_rate_form.link_to_add 'Add special event meal rate', :special_event_meals
+
+      = room_rate_form.link_to_remove 'Remove season'
+
+    = form.link_to_add 'Add a season', :room_rates
+
+    .actions
+      = form.submit 'Save & Next', :disable_with => 'Saving...'

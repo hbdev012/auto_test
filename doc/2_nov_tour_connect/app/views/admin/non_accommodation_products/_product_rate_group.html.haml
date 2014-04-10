@@ -1,0 +1,97 @@
+%fieldset
+  %legend Blackout Periods
+
+  - if form.object.season.blackout_periods.present?
+    %table
+      %thead
+        %tr
+          %th Name
+          %th From
+          %th To
+      %tbody
+        - form.object.season.blackout_periods.each do |blackout|
+          %tr
+            %td= blackout.name
+            %td= blackout.begins_on
+            %td= blackout.ends_on
+
+  #blackouts
+    = form.fields_for :blackout_periods do |blackout_form|
+      = blackout_form.link_to_remove 'Remove this blackout'
+
+      %fieldset
+        = render :partial => 'admin/named_date_ranges/form', :locals => { :form => blackout_form }
+
+    = form.link_to_add 'Add another blackout (to this product only)', :blackout_periods
+
+= render :partial => 'admin/product_markets/form', :locals => { :form => form }
+
+%fieldset
+  %legend Departs on
+
+  .departs-on
+    .field
+      %label
+        = form.radio_button :departs, 'week_days'
+        Week Days
+
+    #departure-week-days.departs-on-values.hidden
+      - form.object.departure_week_days.each do |day, value|
+        .field
+          %label
+            = hidden_field_tag "#{form.object_name}[departure_week_days][#{day}]", false
+            = check_box_tag "#{form.object_name}[departure_week_days][#{day}]", true, value
+            = day.humanize
+
+  .departs-on
+    %label
+      = form.radio_button :departs, 'date_range'
+      Date Range
+
+    #departure-date-range.departs-on-values.hidden
+      = form.fields_for :departure_date_ranges do |departure_date_range_form|
+        %fieldset
+          = render :partial => 'admin/simple_date_ranges/form', :locals => { :form => departure_date_range_form }
+
+        = departure_date_range_form.link_to_remove 'Remove date range'
+
+      = form.link_to_add 'Add date range', :departure_date_ranges
+
+%fieldset
+  %legend Rates:
+  = render :partial => 'admin/product_rates/form', :locals => { :form => form }
+
+%fieldset
+  %legend Special Pricing Period:
+
+  .special-pricing-periods
+    = form.fields_for :special_pricing_periods do |special_pricing_period_form|
+      - if special_pricing_period_form.object.inherits?
+        %div Name: #{ special_pricing_period_form.object.name }
+        %div From: #{ special_pricing_period_form.object.begins_on }
+        %div To: #{ special_pricing_period_form.object.ends_on }
+
+        = special_pricing_period_form.hidden_field :inherited_id
+      - else
+        = render :partial => 'admin/named_date_ranges/form', :locals => { :form => special_pricing_period_form }
+
+      = render :partial => 'admin/price_infos/form', :locals => { :form => special_pricing_period_form }
+
+      - unless special_pricing_period_form.object.inherits?
+        = special_pricing_period_form.link_to_remove 'Remove special pricing'
+
+    = form.link_to_add 'Add special pricing period', :special_pricing_periods
+
+%fieldset.meal-details
+
+  %label
+    = form.check_box :include_meal
+    Include Meal
+
+  = form.label :meal_details
+  = form.text_area :meal_details
+
+%fieldset
+  %label
+    = form.check_box :gst_tax_included
+    GST Tax included

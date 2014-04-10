@@ -1,0 +1,21 @@
+%h2 Step Four: Special Offers
+
+= link_to "Previous: Seasons", edit_admin_non_accommodation_url(non_accommodation, :step => 'seasons')
+
+= nested_form_for non_accommodation, :url => [:admin, non_accommodation] do |form|
+  = render 'shared/error_messages', { :targets => [form.object, *form.object.bonus_offers] }
+
+  = hidden_field_tag :step, params[:step]
+
+  %h2#bonus
+    %span.header-text
+      Bonus Offers
+
+  %div#bonus-offers
+    = form.fields_for :bonus_offers do |bonus_offer_form|
+      = render :partial => 'admin/properties/bonus_offers', :locals => { :form => bonus_offer_form }
+
+    = form.link_to_add 'Add a bonus offer', :bonus_offers
+
+  .actions
+    = form.submit 'Save & Next'

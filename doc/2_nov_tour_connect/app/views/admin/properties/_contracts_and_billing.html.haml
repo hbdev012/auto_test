@@ -1,0 +1,42 @@
+= render 'shared/error_messages', { :targets => [form.object, form.object.insurance_information, *form.object.insurance_information.insurance_documents, form.object.billing_information, form.object.supplier_term] }
+
+= hidden_field_tag :step, params[:step]
+
+%div.corporate-information-fields
+  %h2#property-insurance
+    %span.header-text
+      Property Insurance
+    %span.use-corporate
+      = form.check_box :use_corporate_insurance_information
+      = form.label :use_corporate_insurance_information, 'Same as corporate insurance'
+
+  %fieldset.property-supplier-term{ :style => 'display: none' }
+    %legend Insurance Policy
+    = render :partial => 'admin/insurance_information/insurance_information_form', :locals => { :form => form }
+
+%div.corporate-information-fields
+  %h2#property-billing
+    %span.header-text
+      Property Billing Information
+    %span.use-corporate
+      = form.check_box :use_corporate_billing_information
+      = form.label :use_corporate_billing_information, 'Same as corporate billing'
+
+  %fieldset.property-billing-information{ :style => 'display: none' }
+    %legend Bank Details
+    = render :partial => 'admin/billing_information/billing_information_form', :locals => { :form => form }
+
+%div.corporate-information-fields
+  %h2#property-terms
+    %span.header-text
+      Property Terms and Conditions
+    %span.use-corporate
+      = form.check_box :use_corporate_supplier_term
+      = form.label :use_corporate_supplier_term, 'Same as corporate terms'
+
+  %fieldset.property-supplier-term{ :style => 'display: none' }
+    %legend Terms and Conditions
+    = render :partial => 'admin/supplier_terms/supplier_term_form', :locals => { :form => form }
+
+.actions
+  = form.submit 'Save & Preview'

@@ -1,0 +1,113 @@
+= render 'shared/error_messages', { :targets => form.object }
+
+= hidden_field_tag :step, params[:step]
+
+%fieldset
+  .field
+    = form.label :name, 'Service / Tour name'
+    = form.text_field :name
+
+%fieldset
+  .field
+    = form.label :code, 'Tour code'
+    = form.text_field :code
+
+%fieldset
+  %legend Product Location
+
+  %p Choose location from the existing properties you already added
+
+  .field
+    = form.select :property_id, options_for_select([['- Choose Location -', nil]]) + options_from_collection_for_select(non_accommodations, :id, :name)
+    or
+    = link_to 'Add new properties', new_admin_non_accommodation_path
+
+%fieldset
+  %legend Tour Duration
+
+  .field
+    = form.label :duration_value, 'Number of'
+    = form.text_field :duration_value
+
+  .field
+    = form.select :duration_units, ['Hours', 'Days', 'Weeks']
+
+%fieldset
+  %legend Tour Itinerary
+
+  .field
+    = form.label :short_description
+    = form.text_area :short_description, :rows => 5
+
+  .field
+    = form.label :details, 'More details'
+    = form.text_area :details, :rows => 10
+
+%fieldset
+  %legend Minimum PAX
+
+  .field
+    = form.label :minimum_pax_adult, 'Adults'
+    = form.text_field :minimum_pax_adult
+
+  .field
+    = form.label :minimum_pax_child, 'Child'
+    = form.text_field :minimum_pax_child
+
+  .field
+    = form.label :minimum_pax_total, 'Total'
+    = form.text_field :minimum_pax_total
+
+%fieldset
+  %legend Maximum PAX
+
+  .field
+    = form.label :maximum_pax_adult, 'Adults'
+    = form.text_field :maximum_pax_adult
+
+  .field
+    = form.label :maximum_pax_child, 'Child'
+    = form.text_field :maximum_pax_child
+
+  .field
+    = form.label :maximum_pax_total, 'Total'
+    = form.text_field :maximum_pax_total
+
+%fieldset#pick-up-details
+  %legend Pick up Details
+
+  .field
+    = form.label :pick_up_departs_at, 'Depart time'
+    = form.time_select :pick_up_departs_at, :ampm => true
+
+  .field
+    = form.label :pick_up_location, 'Location'
+    = form.text_field :pick_up_location
+
+%fieldset#drop-off-details
+  %legend Drop off Details
+
+  .field
+    = form.label :drop_off_departs_at, 'Depart time'
+    = form.time_select :drop_off_departs_at, :ampm => true
+
+  .field
+    = form.label :drop_off_location, 'Location'
+    = form.text_field :drop_off_location
+
+%fieldset
+  .field
+    = form.label :standard_inclusion
+    = form.text_area :standard_inclusion
+
+%fieldset
+  .field
+    = form.label :what_to_bring
+    = form.text_area :what_to_bring
+
+%fieldset
+  %legend Images
+  = render :partial => 'admin/images/form', :locals => { :form => form }
+
+.actions
+  = form.submit 'Save & Next'

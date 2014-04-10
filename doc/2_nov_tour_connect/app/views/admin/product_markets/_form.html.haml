@@ -1,0 +1,24 @@
+= form.fields_for :product_market, form.object.product_market do |product_market_form|
+  %fieldset
+    %legend Markets:
+
+    .field
+      = product_market_form.check_box :all_markets
+      = product_market_form.label :all_markets, 'All'
+
+    .field
+      = product_market_form.check_box :domestic_markets
+      = product_market_form.label :domestic_markets, 'Domestic'
+
+    .field
+      = product_market_form.check_box :eta_markets
+      = product_market_form.label :eta_markets, 'ETA'
+
+    .field
+      = product_market_form.check_box :inbound_markets
+      = product_market_form.label :inbound_markets, 'Inbound'
+
+    .field
+      = product_market_form.check_box :other_markets, :id => 'other-markets'
+      = product_market_form.label :other_markets_value, 'Other:'
+      = product_market_form.text_field :other_markets_value

@@ -1,0 +1,60 @@
+%h2#contacts
+  %span.header-text
+    Contacts
+
+%div#contact-groups
+  = form.fields_for :contact_groups do |contact_group_form|
+    %fieldset.contact-group{ :id => contact_group_fieldset_id(contact_group_form.object) }
+      - if contact_group_form.object.initial_group?
+        %legend= "#{ contact_group_form.object.name } Contact"
+        - if contact_group_form.object.new_record?
+          = contact_group_form.hidden_field :name
+          = contact_group_form.hidden_field :initial_group
+      - else
+        %legend
+          = contact_group_form.label :name
+          = contact_group_form.text_field :name, :class => 'contact-group-name'
+
+      %div.contacts
+        = contact_group_form.fields_for :contacts do |contact_form|
+          - if contact_group_form.object.admin_group?
+            %div
+              = contact_form.label :first_name
+              = contact_form.object.first_name
+              = contact_form.hidden_field :first_name
+            %div
+              = contact_form.label :last_name
+              = contact_form.object.last_name
+              = contact_form.hidden_field :last_name
+            %div
+              = contact_form.label :email
+              = contact_form.object.email
+              = contact_form.hidden_field :email
+          - else
+            %div
+              = contact_form.label :first_name
+              = contact_form.text_field :first_name
+            %div
+              = contact_form.label :last_name
+              = contact_form.text_field :last_name
+            %div
+              = contact_form.label :email
+              = contact_form.text_field :email
+          %div
+            = contact_form.label :phone_number
+            = contact_form.text_field :phone_number
+          %div
+            = contact_form.label :fax_number
+            = contact_form.text_field :fax_number
+
+          %div
+            = contact_form.link_to_remove 'x'
+
+        - unless contact_group_form.object.admin_group?
+          = contact_group_form.link_to_add 'Add another person in the same contact group', :contacts
+
+      - unless contact_group_form.object.initial_group?
+        %div
+          = contact_group_form.link_to_remove 'Remove contact group'
+
+  = form.link_to_add 'Add another contact group', :contact_groups

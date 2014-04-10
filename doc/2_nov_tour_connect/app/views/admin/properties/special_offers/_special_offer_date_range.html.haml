@@ -1,0 +1,12 @@
+%fieldset.special-offer-date-range
+  = form.fields_for association_name do |date_range_form|
+
+    = date_range_form.label :from
+    = date_range_form.date_select :from
+
+    = date_range_form.label :to
+    = date_range_form.date_select :to
+
+    = date_range_form.link_to_remove 'Remove date range'
+
+  = form.link_to_add 'Add date range', association_name

@@ -1,0 +1,36 @@
+%h2 Sign up
+= form_for company, :as => :company, :url => registration_path(resource_name) do |form|
+  = render 'shared/error_messages', { :targets => [form.object, *form.object.users.to_a] }
+
+  %div
+    %h3 Account Type
+    = form.radio_button :_type, 'Supplier', :id => 'user_type_supplier'
+    = form.label :_type, 'Supplier', :for => 'user_type_supplier'
+
+    = form.radio_button :_type, 'Contractor', :id => 'user_type_contractor'
+    = form.label :_type, 'Contractor', :for => 'user_type_contractor'
+
+  = form.fields_for :users do |user_form|
+    = render :partial => 'form', :locals => { :form => user_form }
+
+    #company-form
+      %div
+        = form.label :country
+        = form.select :country, SELECTABLE_COUNTRIES
+
+      %div
+        = form.label :name, "Company name"
+        = form.text_field :name
+
+        = form.hidden_field :id, :value => nil
+
+      %div#company-results
+
+    %div
+      = user_form.check_box :terms
+      = user_form.label :terms, 'I agree with TourConnect Terms & Privacy Policy'
+
+  %div= form.submit "Sign up"
+
+= render :partial => "devise/shared/links"
+

@@ -1,0 +1,52 @@
+= render 'shared/error_messages', { :targets => [form.object, form.object.property_policy] }
+
+= hidden_field_tag :step, params[:step]
+
+= form.fields_for :property_policy, form.object.property_policy do |property_policy_form|
+
+  %fieldset
+    %legend Child Policy
+
+    %h3 Infant Age
+    = property_policy_form.label :infant_age_from, 'From'
+    = property_policy_form.select :infant_age_from, (0..18)
+
+    = property_policy_form.label :infant_age_to, 'To'
+    = property_policy_form.select :infant_age_to, (0..18), {}, :id => 'infant_age_to'
+
+    %h3 Children Age
+    = property_policy_form.label :children_age_from, 'From'
+    = property_policy_form.select :children_age_from, (0..18), {}, :id => 'children_age_from'
+
+    = property_policy_form.label :children_age_to, 'To'
+    = property_policy_form.select :children_age_to, (0..18)
+
+  %fieldset
+    %legend Family Policy
+    = property_policy_form.text_field :adults_included
+    = property_policy_form.label :adults_included, 'Adults included in family rate'
+
+    = property_policy_form.text_field :children_included
+    = property_policy_form.label :children_included, 'Children included in family rate'
+
+    = property_policy_form.text_field :adults_needed
+    = property_policy_form.label :adults_needed, 'Adults needed before a child can accompany'
+
+  %fieldset
+    %legend Cancelation Policy
+
+    = render :partial => 'shared/percent_amount_selector', :locals => { :form => property_policy_form, :type_field => :fee_type, :amount_field => :fee_amount }
+
+    = property_policy_form.label :time_before_usage
+    #{ property_policy_form.text_field :time_before_usage }hours
+
+  %fieldset
+    %legend Group Policy/Conditions
+
+    = property_policy_form.label :group_policy
+    = property_policy_form.text_area :group_policy
+    %span.note Maximum 1000 Characters
+
+
+.actions
+  = form.submit 'Save & Next'

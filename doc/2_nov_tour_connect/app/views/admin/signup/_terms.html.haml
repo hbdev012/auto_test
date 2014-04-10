@@ -1,0 +1,6 @@
+- if current_company.is_a?(Supplier)
+
+  %h3 Corporate Terms and Conditions
+
+  %fieldset
+    = render :partial => 'admin/supplier_terms/supplier_term_form', :locals => { :form => form }

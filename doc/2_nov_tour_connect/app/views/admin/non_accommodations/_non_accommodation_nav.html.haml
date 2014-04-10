@@ -1,0 +1,49 @@
+%ol#property-nav
+
+  - if non_accommodation.new_record?
+    %li#basic_information_nav
+      %span Basic Information
+      .status.not-filled
+
+    %li#policies_nav
+      %span Policies
+      .status.not-filled
+
+    %li#seasons_nav
+      %span Seasons
+      .status.not-filled
+
+    %li#special_offers_nav
+      %span Special Offers
+      .status.not-filled
+
+    %li#contracts_and_billing_nav
+      %span Contracts and Billing
+      .status.not-filled
+
+  - else
+    %li#basic_information_nav
+      = link_to 'Basic Information', edit_admin_non_accommodation_url(non_accommodation, :step => 'basic_information')
+      .status.not-filled
+
+    %li#policies_nav
+      = link_to 'Policies', edit_admin_non_accommodation_url(non_accommodation, :step => 'policies')
+      .status.not-filled
+      
+    %li#seasons_nav
+      = link_to 'Seasons', edit_admin_non_accommodation_url(non_accommodation, :step => 'seasons')
+      .status.not-filled
+
+    %li#special_offers_nav
+      = link_to 'Special Offers', edit_admin_non_accommodation_url(non_accommodation, :step => 'special_offers')
+      .status.not-filled
+
+    %li#contracts_and_billing_nav
+      = link_to 'Contracts and Billing', edit_admin_non_accommodation_url(non_accommodation, :step => 'contracts_and_billing')
+      .status.not-filled
+
+#non-accommodation-nav-key
+  %ul
+    %li Not filled yet #{ image_tag 'icons/not_filled.png' }
+    %li Completed #{ image_tag 'icons/completed.png' }
+    %li Missing required information #{ image_tag 'icons/missing_info.png' }

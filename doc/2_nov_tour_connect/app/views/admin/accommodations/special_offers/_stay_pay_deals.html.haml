@@ -1,0 +1,20 @@
+= render :partial => 'admin/properties/special_offers/special_offer_date_range', :locals => { :form => form, :association_name => :stay_pay_date_ranges }
+
+%fieldset#stay-pay-offer
+  = render :partial => 'admin/stay_pay_offers/form', :locals => { :form => form }
+
+= render :partial => 'admin/properties/special_offers/booking_code', :locals => { :form => form }
+
+%fieldset
+  = form.check_box :partial_offers
+  = form.label :partial_offers, 'Partial offers allowed'
+
+- with_options :locals => { :form => form } do |partial|
+  = partial.render :partial => 'admin/properties/special_offers/combinable'
+  = partial.render :partial => 'admin/properties/special_offers/special_conditions'
+
+%fieldset
+  = form.check_box :standard_meal_offer
+  = form.label :standard_meal_offer, 'Standard room meal offer apply'
+
+= form.link_to_remove 'Remove this stay/pay deal'

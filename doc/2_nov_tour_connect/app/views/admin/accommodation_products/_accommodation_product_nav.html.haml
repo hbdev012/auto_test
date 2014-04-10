@@ -1,0 +1,33 @@
+%ol#product-nav
+
+  - if accommodation_product.new_record?
+    %li#basic_information_nav
+      %span Basic Information
+      .status.not-filled
+
+    %li#room_details_nav
+      %span Room Details
+      .status.not-filled
+
+    %li#room_rates_nav
+      %span Room Rates
+      .status.not-filled
+
+  - else
+    %li#basic_information_nav
+      = link_to 'Basic Information', edit_admin_accommodation_product_url(accommodation_product, :step => 'basic_information')
+      .status.not-filled
+
+    %li#room_details_nav
+      = link_to 'Room Details', edit_admin_accommodation_product_url(accommodation_product, :step => 'room_details')
+      .status.not-filled
+
+    %li#room_rates_nav
+      = link_to 'Room Rates', edit_admin_accommodation_product_url(accommodation_product, :step => 'room_rates')
+      .status.not-filled
+
+#accommodation-product-nav-key
+  %ul
+    %li Not filled yet #{ image_tag 'icons/not_filled.png' }
+    %li Completed #{ image_tag 'icons/completed.png' }
+    %li Missing required information #{ image_tag 'icons/missing_info.png' }

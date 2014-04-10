@@ -1,0 +1,9 @@
+%h1 Accommodations
+
+= link_to 'New Accommodation', new_admin_accommodation_path
+
+%ul#accommodations
+  - accommodations.each do |accommodation|
+    %li
+      = link_to accommodation.name, edit_admin_accommodation_path(accommodation)
+      = link_to 'Delete', admin_accommodation_path(accommodation), :method => :delete, :confirm => 'Are you sure you want to delete this accommodation. This cannot be undone'

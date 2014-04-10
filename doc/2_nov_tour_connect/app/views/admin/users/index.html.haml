@@ -1,0 +1,19 @@
+%h2 Pending Users
+
+#pending-users
+  %table
+    %thead
+      %tr
+        %th Name
+        %th Email
+        %th Job Title
+        %th{ :colspan => 2 }
+
+    %tbody
+      - users.each do |user|
+        %tr{ :id => dom_id(user, :pending) }
+          %td= user.name
+          %td= user.email
+          %td= user.job_title
+          %td= button_to 'Accept', [:accept, :admin, user], :method => :put
+          %td= button_to 'Reject', [:reject, :admin, user], :method => :delete, :class => 'reject-button'

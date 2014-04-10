@@ -1,0 +1,6 @@
+%h2 Step Five: Contracts and Billing
+
+= link_to "Previous: Special Offers", edit_admin_non_accommodation_url(non_accommodation, :step => 'special_offers')
+
+= nested_form_for non_accommodation, :url => [:admin, non_accommodation], :html => { :multipart => true } do |form|
+  = render :partial => 'admin/properties/contracts_and_billing', :locals => { :form => form }

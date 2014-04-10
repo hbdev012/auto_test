@@ -1,0 +1,22 @@
+%h1 #{current_user.first_name}, let's complete your signup process.
+
+= render 'navigation'
+
+%h2 Step One: Corporate Information
+
+%h3 Corporate Description and Location
+
+= nested_form_for current_company, :as => :company, :url => admin_signup_path, :html => { :method => :put, :multipart => true } do |form|
+  = render 'shared/error_messages', { :targets => error_message_targets_for_signup(form.object) }
+
+  %fieldset#company-name
+    %legend Corporate Name:
+    = current_company.name
+  - with_options :locals => { :form => form } do |signup_form|
+    = signup_form.render :partial => 'corporate_information'
+    = signup_form.render :partial => 'corporate_location'
+    = signup_form.render :partial => 'admin/contacts/contacts_form'
+    = signup_form.render :partial => 'insurance'
+    = signup_form.render :partial => 'terms'
+
+  = form.submit 'Save & Next'

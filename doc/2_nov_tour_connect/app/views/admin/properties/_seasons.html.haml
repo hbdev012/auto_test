@@ -1,0 +1,46 @@
+#gap-message.hidden
+  %strong
+    Error:
+  Seasons don't span the calendar year, please arrange your seasons to fill the entire year.
+
+= calendar_preview(form.object)
+
+= render 'shared/error_messages', { :targets => [form.object, *form.object.seasons, *form.object.seasons.collect(&:blackout_periods).flatten, *form.object.seasons.collect(&:special_pricing_periods).flatten] }
+
+= hidden_field_tag :step, params[:step]
+
+%div#seasons
+  = form.fields_for :seasons do |season_form|
+    = season_form.link_to_remove 'Remove this season'
+
+    %fieldset
+      = render :partial => 'admin/named_date_ranges/form', :locals => { :form => season_form }
+
+    %fieldset
+      %legend Blackout Periods
+
+      #blackouts
+        = season_form.fields_for :blackout_periods do |blackout_form|
+          = blackout_form.link_to_remove 'Remove this blackout'
+
+          %fieldset
+            = render :partial => 'admin/named_date_ranges/form', :locals => { :form => blackout_form }
+
+        = season_form.link_to_add 'Add a blackout period', :blackout_periods
+
+    %fieldset
+      %legend Special Pricing Periods
+
+      #special-pricing
+        = season_form.fields_for :special_pricing_periods do |special_pricing_form|
+          = special_pricing_form.link_to_remove 'Remove this special pricing'
+
+          %fieldset
+            = render :partial => 'admin/named_date_ranges/form', :locals => { :form => special_pricing_form }
+
+        = season_form.link_to_add 'Add a special pricing period', :special_pricing_periods
+
+  = form.link_to_add 'Add a season', :seasons
+
+.actions
+  = form.submit 'Save & Next'

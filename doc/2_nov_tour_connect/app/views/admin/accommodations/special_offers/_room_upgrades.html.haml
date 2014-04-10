@@ -1,0 +1,21 @@
+= render :partial => 'admin/properties/special_offers/special_offer_date_range', :locals => { :form => form, :association_name => :room_upgrade_date_ranges }
+
+%fieldset#room-upgrade-offer
+  = form.fields_for :room_upgrade_offers do |room_upgrade_offer_form|
+
+    = room_upgrade_offer_form.label :from_room_type
+    = room_upgrade_offer_form.text_field :from_room_type
+
+    = room_upgrade_offer_form.label :to_room_type
+    = room_upgrade_offer_form.text_field :to_room_type
+
+    = room_upgrade_offer_form.link_to_remove 'Remove upgrade'
+
+  = form.link_to_add 'Add upgrade', :room_upgrade_offers
+
+- with_options :locals => { :form => form } do |partial|
+  = partial.render :partial => 'admin/properties/special_offers/booking_code'
+  = partial.render :partial => 'admin/properties/special_offers/combinable'
+  = partial.render :partial => 'admin/properties/special_offers/special_conditions'
+
+= form.link_to_remove 'Remove this room upgrade'

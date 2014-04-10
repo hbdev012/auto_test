@@ -1,0 +1,8 @@
+- if current_company.is_a?(Supplier)
+
+  %h3 Corporate Insurance
+
+  %fieldset
+    %legend Upload insurance document
+
+    = render :partial => 'admin/insurance_information/insurance_information_form', :locals => { :form => form }

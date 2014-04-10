@@ -1,0 +1,9 @@
+%h1 Add new property/location accommodation
+
+%div.sidebar
+  = render :partial => 'accommodation_nav'
+
+%div.content
+  %p= "Last Save: #{distance_of_time_in_words_to_now(accommodation.updated_at, false)} ago"
+
+  = render :partial => params[:step]

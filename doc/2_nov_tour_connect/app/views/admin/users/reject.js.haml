@@ -1,0 +1,7 @@
+$('#dialog').dialog('close');
+$('#pending_user_#{ params[:id] }').remove();
+$.clearFlashMessages();
+
+- flash.each do |name, msg|
+  $('#flash-messages').append($('#{content_tag :div, msg, :id => "flash_#{name}"}'))
+- flash.clear

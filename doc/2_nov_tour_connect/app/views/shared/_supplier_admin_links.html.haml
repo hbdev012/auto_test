@@ -1,0 +1,5 @@
+- if current_user.company.is_a?(Supplier)
+  %li= link_to 'Accommodations', admin_accommodations_path
+  %li= link_to 'Non Accommodations', admin_non_accommodations_path
+  %li= link_to 'Accommodation Products', admin_accommodation_products_path
+  %li= link_to 'Non-Accommodation Products', admin_non_accommodation_products_path

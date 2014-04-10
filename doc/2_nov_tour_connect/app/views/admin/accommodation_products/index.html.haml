@@ -1,0 +1,12 @@
+%h1 Accommodation Products
+
+= link_to 'New Accommodation Product', new_admin_accommodation_product_path
+
+= form_tag [:admin, :accommodation_products], :method => :get do |form|
+  = render :partial => 'admin/products/filter_form', :locals => { :properties => accommodations }
+
+%ul#accommodation-products
+  - accommodation_products.each do |accommodation_product|
+    %li
+      = link_to accommodation_product.name, edit_admin_accommodation_product_path(accommodation_product)
+      = link_to 'Delete', admin_accommodation_product_path(accommodation_product), :method => :delete, :confirm => 'Are you sure you want to delete this accommodation product. This cannot be undone.'

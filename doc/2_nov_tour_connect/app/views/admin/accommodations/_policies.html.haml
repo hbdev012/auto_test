@@ -1,0 +1,7 @@
+%h2 Step Three: Policies
+
+= link_to "Previous: Ratings & Amenities", edit_admin_accommodation_url(accommodation, :step => 'ratings_and_amenities')
+
+= form_for accommodation, :url => [:admin, accommodation] do |form|
+
+  = render :partial => 'admin/properties/policies', :locals => { :form => form }

@@ -1,0 +1,33 @@
+%ol#product-nav
+
+  - if non_accommodation_product.new_record?
+    %li#basic_information_nav
+      %span Basic Information
+      .status.not-filled
+
+    %li#tour_rates_nav
+      %span Tour Rates
+      .status.not-filled
+
+    %li#tour_bonus_nav
+      %span Tour Bonus
+      .status.not-filled
+
+  - else
+    %li#basic_information_nav
+      = link_to 'Basic Information', edit_admin_non_accommodation_product_url(non_accommodation_product, :step => 'basic_information')
+      .status.not-filled
+
+    %li#tour_rates_nav
+      = link_to 'Tour Rates', edit_admin_non_accommodation_product_url(non_accommodation_product, :step => 'tour_rates')
+      .status.not-filled
+      
+    %li#tour_bonus_nav
+      = link_to 'Tour Bonus', edit_admin_non_accommodation_product_url(non_accommodation_product, :step => 'tour_bonus')
+      .status.not-filled
+
+#non-accommodation-product-nav-key
+  %ul
+    %li Not filled yet #{ image_tag 'icons/not_filled.png' }
+    %li Completed #{ image_tag 'icons/completed.png' }
+    %li Missing required information #{ image_tag 'icons/missing_info.png' }

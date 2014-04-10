@@ -1,0 +1,5 @@
+- supplier_term = form.object.is_a?(Property) && form.object.use_corporate_supplier_term? ? SupplierTerm.new : form.object.supplier_term
+= form.fields_for :supplier_term, supplier_term do |supplier_term_form|
+  %div
+    = supplier_term_form.label :terms, 'Enter terms and conditions here:'
+    = supplier_term_form.text_area :terms

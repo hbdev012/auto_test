@@ -1,0 +1,4 @@
+= nested_form_for non_accommodation_product, :url => [:admin, non_accommodation_product] do |form|
+  = form.fields_for :product_rate_groups, product_rate_group do |product_rate_group_form|
+    #product-rate-group-inner
+      = render :partial => 'admin/non_accommodation_products/product_rate_group', :locals => { :form => product_rate_group_form }

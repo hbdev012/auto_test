@@ -1,0 +1,12 @@
+%div.images
+  = form.fields_for :images do |image_form|
+    %div.image
+      = image_form.hidden_field :retained_attachment
+      = image_form.label :attachment, 'Select from your computer'
+      = image_form.file_field :attachment
+      - if image_form.object.try(:attachment).present?
+        Current file: #{ link_to image_form.object.attachment.name, image_form.object.attachment.url }
+
+      = image_form.link_to_remove 'Remove this image'
+
+  = form.link_to_add 'Add an image', :images

@@ -1,0 +1,7 @@
+%h2 Step One: Basic Information
+
+%p 
+  Add here all the properties/Branches you manage and introduce products from
+
+= nested_form_for accommodation, :url => [:admin, accommodation], :html => { :multipart => true } do |form|
+  = render :partial => 'admin/properties/basic_information', :locals => { :form => form }

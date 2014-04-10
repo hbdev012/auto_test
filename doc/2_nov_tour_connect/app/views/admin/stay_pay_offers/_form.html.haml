@@ -1,0 +1,27 @@
+= form.fields_for :stay_pay_offers do |stay_pay_offer_form|
+
+  .field
+    = stay_pay_offer_form.label :name
+    = stay_pay_offer_form.text_field :name
+
+  .field
+    = stay_pay_offer_form.label :stay
+    = stay_pay_offer_form.text_field :stay
+
+  .field
+    = stay_pay_offer_form.label :pay
+    = stay_pay_offer_form.text_field :pay
+    nights
+
+  - if defined?(accommodation_product)
+    .field
+      = stay_pay_offer_form.label :comment
+      = stay_pay_offer_form.text_field :comment
+
+  .field
+    = stay_pay_offer_form.check_box :apply_for_weekend
+    = stay_pay_offer_form.label :apply_for_weekend
+
+  = stay_pay_offer_form.link_to_remove 'Remove offer'
+
+= form.link_to_add 'Add offer', :stay_pay_offers

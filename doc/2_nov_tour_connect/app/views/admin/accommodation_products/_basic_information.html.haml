@@ -1,0 +1,68 @@
+%h2 Step One: Basic Information
+
+%p
+  Add here all the properties/Branches you manage and introduce products from
+
+= form_for accommodation_product, :url => [:admin, accommodation_product], :html => { :multipart => true } do |form|
+  = render 'shared/error_messages', { :targets => form.object }
+
+  = hidden_field_tag :step, params[:step]
+
+  %fieldset
+    .field
+      = form.label :name, 'Product name'
+      = form.text_field :name
+
+    .field
+      = form.label :code, 'Product code'
+      = form.text_field :code
+
+  %fieldset
+    %legend Product Location
+
+    %p Choose location from the existing properties you already added
+
+    .field
+      = form.select :property_id, options_for_select([['- Choose Location -', nil]]) + options_from_collection_for_select(accommodations, :id, :name)
+      or
+      = link_to 'Add new properties', new_admin_accommodation_path
+
+  %fieldset.allocation-types
+    %legend Allocation Type
+
+    .field
+      = form.label :allocation_type, 'Freesale'
+      = form.radio_button :allocation_type, 'freesale'
+
+    .field
+      = form.label :allocation_type, 'Allotment'
+      = form.radio_button :allocation_type, 'allotment'
+
+    .field.allotment-type-fields.hidden
+      = form.label :number_of_rooms
+      = form.text_field :number_of_rooms
+
+    .field.allotment-type-fields.hidden
+      = form.label :releaseback_days
+      = form.text_field :releaseback_days
+
+  %fieldset
+    %legend Product Description
+
+    .field
+      = form.label :short_description
+      = form.text_area :short_description
+
+    .field
+      = form.label :details, 'More details'
+      = form.text_area :details
+
+    .field
+      = form.label :general_notes
+      = form.text_area :general_notes
+
+    .field
+      = form.check_box :complies_to_eu_regulations
+      = form.label :complies_to_eu_regulations, 'Complies to EU Regulations'
+
+  = form.submit 'Save & Next', :disable_with => 'Saving...'

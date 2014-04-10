@@ -1,0 +1,31 @@
+%div{ :style => 'background-color: yellow; padding: 5px' }
+  This is just a placeholder page!
+
+%h1 #{current_user.first_name}, let's complete your signup process.
+
+= render 'admin/signup/navigation'
+
+%h2 Step Three: Payment Information
+
+%fieldset
+  %legend Bank Details
+
+  %div
+    = label_tag 'Credit or Debit Card Number'
+    = text_field_tag '' 
+  %div
+    = label_tag 'Payment Type'
+    = select_tag '', '<option>Money</option>'.html_safe
+  %div
+    = label_tag 'Credit or Debit Card Number'
+    = text_field_tag '' 
+  %div
+    = label_tag 'Billing Address'
+    = text_area_tag '' 
+
+  = button_to 'Save & Done', root_url, :disable_with => 'Submitting...'
+
+%br/
+%div{ :style => 'background-color: yellow; padding: 5px' }
+  This is just a placeholder page!
+  

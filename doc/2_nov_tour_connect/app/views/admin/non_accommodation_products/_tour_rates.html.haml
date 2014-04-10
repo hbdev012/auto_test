@@ -1,0 +1,26 @@
+%h2 Step Two: Tour Rates
+
+= link_to "Previous: Basic Information", edit_admin_non_accommodation_product_url(non_accommodation_product, :step => 'basic_information')
+
+= nested_form_for non_accommodation_product, :url => [:admin, non_accommodation_product] do |form|
+  = render 'shared/error_messages', { :targets => [form.object, *form.object.product_rate_groups, *form.object.product_rate_groups.collect(&:product_rates).flatten, *form.object.product_rate_groups.collect(&:special_pricing_periods).flatten] }
+
+  = hidden_field_tag :step, params[:step]
+
+  #rate-groups
+    = form.fields_for :product_rate_groups do |product_rate_group_form|
+      %fieldset
+        .field
+          = product_rate_group_form.label :season_id, 'Season Name:'
+          = product_rate_group_form.select(:season_id, options_for_select([['- Choose Season name -', nil]]) + options_from_collection_for_select(form.object.property.seasons, :id, :name, product_rate_group_form.object.season_id.to_s), {}, { :class => 'non-accommodation-product-season-select', 'data-url' => admin_product_product_rate_group_path(form.object) })
+
+      .product-rate-group
+        - if product_rate_group_form.object && product_rate_group_form.object.season.present?
+          = render :partial => 'product_rate_group', :locals => { :form => product_rate_group_form }
+
+      = product_rate_group_form.link_to_remove 'Remove season rate group'
+
+    = form.link_to_add 'Add season rate group', :product_rate_groups
+
+  .actions
+    = form.submit 'Save & Next'

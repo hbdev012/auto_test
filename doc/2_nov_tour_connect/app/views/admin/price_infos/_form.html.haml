@@ -1,0 +1,34 @@
+= form.fields_for :price_info, form.object.price_info do |price_info_form|
+  .field
+    = price_info_form.label :price_code
+    = price_info_form.text_field :price_code
+
+  - if defined?(accommodation_product)
+    .field
+      = price_info_form.label :minimum_nights
+      = price_info_form.text_field :minimum_nights
+
+  .field
+    = price_info_form.label :adult_rate
+    = price_info_form.text_field :adult_rate
+
+  .field
+    = price_info_form.label :child_rate
+    = price_info_form.text_field :child_rate
+
+  .field
+    = price_info_form.label :infant_rate
+    = price_info_form.text_field :infant_rate
+
+  .field
+    = price_info_form.label :student_rate
+    = price_info_form.text_field :student_rate
+
+  .field
+    - if defined?(accommodation_product)
+      = price_info_form.label :per_night_rate
+      = price_info_form.text_field :per_night_rate
+    - else
+      = price_info_form.label :concession_rate
+      = price_info_form.text_field :concession_rate
+    $
